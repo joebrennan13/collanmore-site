@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Collanmore Island Lodge</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A private island lodge for up to 22 guests in Clew Bay, Co. Mayo. Two minutes by boat from Rosmoney Pier, twelve minutes from Westport.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&display=swap">
+<style>
+/* Layout concept: the page is the journey out. The photograph of the bay opens it, a sea chart
+   carries you from Westport to the jetty as you scroll, and then you're inside the lodge.
+   Left-aligned throughout; the hero and the crossing chart are the only loud moments. */
+:root{
+  --bay:#0c3a40;      /* Clew Bay, deep water */
+  --night:#08242a;    /* the bay after dark */
+  --spray:#eef3f1;    /* surf on the drumlins */
+  --kelp:#2f5d4a;     /* island grass and wrack */
+  --buoy:#e8541d;     /* life jackets, RIB fenders, the route line */
+  --sand:#d8c49b;     /* the strand at low tide */
+  --bg:#eef3f1;--fg:#0d2226;--muted:#4c6367;--line:#cddad7;--card:#ffffff;
+  --chart-sea:#d4e4e6;--chart-land:#ebe6d4;--chart-ink:#0c3a40;--chart-soft:#7d9aa0;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Literata",Georgia,"Times New Roman",serif;
+  --gutL:max(16px,env(safe-area-inset-left,0px));
+  --gutR:max(16px,env(safe-area-inset-right,0px));
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08242a;--fg:#e4eeec;--muted:#9cb4b3;--line:#1d3d43;--card:#0e2e34;
+  --chart-sea:#0f3339;--chart-land:#1b3a35;--chart-ink:#e4eeec;--chart-soft:#6f8f94;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#08242a;--fg:#e4eeec;--muted:#9cb4b3;--line:#1d3d43;--card:#0e2e34;
+  --chart-sea:#0f3339;--chart-land:#1b3a35;--chart-ink:#e4eeec;--chart-soft:#6f8f94;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--night)}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1.02;letter-spacing:-.025em;margin:0;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding-left:var(--gutL);padding-right:var(--gutR)}
+:focus-visible{outline:3px solid var(--buoy);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;font-family:var(--display);font-weight:600;font-size:16px;padding:.85em 1.45em;border-radius:999px;text-decoration:none;border:0;cursor:pointer}
+.btn-buoy{background:var(--buoy);color:#fff}
+.btn-buoy:hover{background:#cf4512}
+.btn-ghost{color:#fff;border:1.5px solid rgba(255,255,255,.6)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+
+/* concept strip */
+.concept{background:var(--night);color:#a9c3c0;font-size:13px;padding-block:8px}
+.concept .wrap{display:flex;gap:6px 16px;flex-wrap:wrap;justify-content:center}
+.concept a{color:var(--sand)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(8,36,42,.9);backdrop-filter:blur(10px);color:#fff}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand b{font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:-.02em;line-height:1}
+.brand small{display:block;font-family:var(--display);font-size:12.5px;opacity:.7;margin-top:2px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-family:var(--display);font-size:15px}
+.nav ul a{text-decoration:none;opacity:.82}
+.nav ul a:hover{opacity:1}
+.nav .btn{padding:.6em 1.15em;font-size:14.5px}
+@media (max-width:920px){.nav ul{display:none}}
+
+/* hero: the one big moment */
+.hero{position:relative;color:#fff;background:var(--night);overflow:hidden;min-height:min(calc(100vh - 110px),860px);display:flex;flex-direction:column;justify-content:flex-end}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;animation:arrive 2.6s cubic-bezier(.2,.7,.1,1) both}
+@keyframes arrive{from{transform:scale(1.14);filter:saturate(.6) brightness(.8)}to{transform:scale(1);filter:none}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,36,42,.25) 0%,rgba(8,36,42,0) 30%,rgba(8,36,42,.2) 55%,rgba(8,36,42,.86) 100%)}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-block:100px 0}
+.hero h1{font-size:clamp(52px,10.5vw,168px);font-weight:800;line-height:.9;letter-spacing:-.045em;max-width:15ch}
+.hero h1 span{display:block;animation:rise 1.4s cubic-bezier(.2,.7,.1,1) both}
+.hero h1 span:nth-child(2){animation-delay:.18s}
+@keyframes rise{from{transform:translateY(.35em);opacity:.15}to{transform:none;opacity:1}}
+.hero .under{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end;margin-top:34px;padding-block:28px 40px;border-top:1px solid rgba(255,255,255,.35);animation:rise 1.4s .4s cubic-bezier(.2,.7,.1,1) both}
+.hero .under p{font-size:clamp(17px,1.6vw,21px);max-width:46ch;opacity:.95}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:760px){.hero{min-height:88vh}.hero .under{grid-template-columns:1fr}}
+
+/* sections */
+section{padding-block:104px}
+.head{max-width:820px;margin-bottom:48px}
+.head h2{font-size:clamp(36px,5.4vw,72px);font-weight:800}
+.head p{margin-top:18px;color:var(--muted);font-size:18.5px;max-width:58ch}
+@media (max-width:760px){section{padding-block:72px}}
+
+/* crossing chart: the second moment, scroll-scrubbed */
+.crossing{background:var(--bay);color:#fff;padding-block:0}
+.crossing .track{position:relative}
+.crossing .grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:56px;align-items:start}
+.chart-wrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);padding-block:40px}
+.chart{border-radius:10px;overflow:hidden;background:var(--chart-sea);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.chart svg{display:block;width:100%;height:auto}
+.clock{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;font-family:var(--display)}
+.clock b{font-size:44px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.clock span{opacity:.75;font-size:15px}
+.legs{padding-block:120px 140px;display:grid;gap:44vh}
+.legs .intro h2{font-size:clamp(36px,4.6vw,62px);font-weight:800}
+.legs .intro p{margin-top:16px;opacity:.85;max-width:40ch}
+.leg{border-left:2px solid rgba(255,255,255,.25);padding-left:22px;transition:border-color .3s,opacity .3s;opacity:.55}
+.leg.on{border-color:var(--buoy);opacity:1}
+.leg h3{font-size:28px;font-weight:800}
+.leg .t{font-family:var(--display);color:var(--sand);font-size:15px;margin-bottom:6px;display:block}
+.leg p{margin-top:8px;opacity:.88;max-width:40ch}
+.pack{background:rgba(255,255,255,.07);border-radius:8px;padding:22px 24px;max-width:44ch}
+.pack h3{font-size:20px;font-weight:600;color:var(--sand);margin-bottom:6px}
+@media (max-width:900px){
+  .crossing .grid{grid-template-columns:1fr;gap:0}
+  .chart-wrap{position:relative;top:0;padding-block:56px 8px}
+  .legs{gap:36px;padding-block:28px 64px}
+  .leg{opacity:1;border-color:var(--buoy)}
+}
+
+/* lodge */
+.mosaic{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:118px;gap:12px}
+.mosaic figure{margin:0;position:relative;overflow:hidden;border-radius:3px;background:var(--line)}
+.mosaic img{width:100%;height:100%;object-fit:cover}
+.mosaic figcaption{position:absolute;left:12px;bottom:10px;font-family:var(--display);font-size:13.5px;font-weight:600;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.m1{grid-column:1/8;grid-row:span 4}.m2{grid-column:8/13;grid-row:span 2}.m3{grid-column:8/13;grid-row:span 2}
+.m4{grid-column:1/5;grid-row:span 2}.m5{grid-column:5/9;grid-row:span 2}.m6{grid-column:9/13;grid-row:span 2}
+@media (max-width:760px){.mosaic{grid-auto-rows:104px}.m1{grid-column:1/-1;grid-row:span 3}.m2,.m3,.m4,.m5{grid-column:span 6;grid-row:span 2}.m6{grid-column:1/-1;grid-row:span 2}}
+.sleeps{margin-top:56px;font-family:var(--display);font-size:clamp(28px,3.6vw,48px);line-height:1.15;letter-spacing:-.02em;max-width:24ch;font-weight:400}
+.sleeps b{font-weight:800}
+.amen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 44px;margin-top:48px;padding-top:32px;border-top:1px solid var(--line)}
+.amen h3{font-size:21px;font-weight:600;margin-bottom:6px}
+.amen p{color:var(--muted);font-size:16px}
+@media (max-width:760px){.amen{grid-template-columns:1fr}}
+
+/* Tom's Bar: the warm room */
+.bar{background:#1c100b;color:#f1e3d3}
+.bar .grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:64px;align-items:center}
+.bar .photos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bar .photos img{border-radius:3px;aspect-ratio:1;object-fit:cover;width:100%}
+.bar .photos img:first-child{grid-column:1/-1;aspect-ratio:16/10}
+.bar h2{font-size:clamp(48px,7vw,96px);font-weight:800;color:#f3c46b;letter-spacing:-.04em}
+.bar blockquote{margin:24px 0;padding-left:18px;border-left:2px solid #f3c46b;font-style:italic;font-size:19px;max-width:40ch}
+.bar p{max-width:50ch;opacity:.9}
+@media (max-width:860px){.bar .grid{grid-template-columns:1fr;gap:36px}}
+
+/* hot and cold */
+.heat .grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px;align-items:start}
+.heat .big{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
+.heat .items{display:grid;gap:32px}
+.heat .item{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;align-items:start}
+.heat .item img{width:120px;height:120px;object-fit:cover;border-radius:3px}
+.heat h3{font-size:24px;font-weight:800;margin-bottom:6px}
+.heat .item p{color:var(--muted);font-size:16px}
+@media (max-width:860px){.heat .grid{grid-template-columns:1fr}.heat .big{aspect-ratio:4/3}}
+
+/* adventures */
+.adv{background:var(--bay);color:#fff}
+.adv .head p{color:#b9cfcc}
+.rows{border-top:1px solid rgba(255,255,255,.22)}
+.row{display:grid;grid-template-columns:220px minmax(0,1.6fr) minmax(0,1fr) 140px;gap:32px;align-items:center;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.row img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:3px}
+.row h3{font-size:clamp(25px,2.6vw,34px);font-weight:800}
+.row p{color:#c4d6d3;font-size:16px;margin-top:6px}
+.row .facts{font-size:15px;color:#b9cfcc;line-height:1.5}
+.row .price{font-family:var(--display);font-size:34px;font-weight:800;color:var(--sand);text-align:right;letter-spacing:-.02em;line-height:1}
+.row .price small{display:block;font-size:13px;font-weight:400;color:#b9cfcc;margin-top:6px;letter-spacing:0}
+@media (max-width:920px){.row{grid-template-columns:110px minmax(0,1fr);gap:8px 18px}.row img{grid-row:span 3;align-self:start}.row .price{text-align:left;font-size:26px}}
+.note{font-size:14px;color:#9cb4b3;margin-top:20px}
+
+/* groups */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.tabs button{font-family:var(--display);font-weight:600;font-size:16px;padding:.7em 1.25em;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.panel{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:56px;align-items:center}
+.panel img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px}
+.panel h3{font-size:clamp(30px,3.6vw,48px);font-weight:800;margin-bottom:16px}
+.panel p{color:var(--muted);max-width:48ch}
+.panel ul{margin:22px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.panel li{padding-left:22px;position:relative;font-size:16px}
+.panel li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:10px;border-radius:50%;background:var(--buoy)}
+@media (max-width:860px){.panel{grid-template-columns:1fr;gap:24px}}
+
+/* reviews */
+.reviews{background:var(--card);border-block:1px solid var(--line)}
+.feature{font-family:var(--display);font-weight:600;font-size:clamp(30px,4.4vw,60px);line-height:1.08;letter-spacing:-.03em;max-width:22ch;margin:0}
+.feature-by{margin-top:18px;color:var(--muted)}
+.more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.more blockquote{margin:0;font-size:19px;font-style:italic}
+.more p{margin-top:8px;color:var(--muted);font-size:15px}
+.rating{margin-top:48px;font-family:var(--display);font-size:18px}
+.rating b{font-weight:800;font-size:22px}
+@media (max-width:760px){.more{grid-template-columns:1fr}}
+
+/* gallery */
+.gallery{columns:4 240px;column-gap:12px}
+.gallery button{display:block;width:100%;margin:0 0 12px;padding:0;border:0;background:var(--line);border-radius:3px;overflow:hidden;cursor:zoom-in;break-inside:avoid}
+.gallery img{width:100%;height:auto}
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(5,20,23,.95);display:grid;place-items:center;padding:max(64px,env(safe-area-inset-top)) var(--gutR) max(48px,env(safe-area-inset-bottom)) var(--gutL)}
+.lightbox img{max-height:80vh;max-width:min(1200px,100%);width:auto;border-radius:3px}
+.lb-bar{position:absolute;top:max(14px,env(safe-area-inset-top));right:var(--gutR);display:flex;gap:8px}
+.lightbox button{font-family:var(--display);font-size:14px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:.55em 1.05em;cursor:pointer}
+.lb-cap{position:absolute;bottom:max(16px,env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:#b9cfcc;font-size:14px}
+
+/* enquiry */
+.enquire{background:var(--night);color:#fff}
+.enquire .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:64px;align-items:start}
+.enquire h2{font-size:clamp(40px,5.6vw,76px);font-weight:800}
+.enquire .intro p{color:#c4d6d3;margin-top:18px;max-width:42ch}
+.contact{margin-top:32px;display:grid;gap:16px}
+.contact dt{font-family:var(--display);font-size:14px;color:var(--sand)}
+.contact dd{margin:2px 0 0;font-size:18px;user-select:all}
+form{background:var(--bg);color:var(--fg);border-radius:10px;padding:32px;display:grid;gap:20px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f{display:grid;gap:6px;font-family:var(--display);font-size:14.5px;font-weight:600}
+input,select{font:inherit;font-family:var(--body);font-weight:400;font-size:16px;color:var(--fg);background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:.7em .8em;width:100%;min-width:0}
+.size{display:flex;align-items:center;gap:14px}
+.size input{padding:0;border:0;background:transparent;accent-color:var(--buoy)}
+.size output{font-family:var(--display);font-size:32px;font-weight:800;min-width:2.2ch;text-align:right}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-family:var(--display);font-size:14.5px;font-weight:600;margin-bottom:8px;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{cursor:pointer;position:relative}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips span{display:inline-block;font-family:var(--display);font-size:14.5px;font-weight:600;padding:.5em 1em;border-radius:999px;border:1.5px solid var(--line)}
+.chips input:checked+span{background:var(--kelp);border-color:var(--kelp);color:#fff}
+.chips input:focus-visible+span{outline:3px solid var(--buoy);outline-offset:2px}
+.result{border:1.5px dashed var(--kelp);border-radius:8px;padding:18px;background:var(--card)}
+.result h3{font-size:17px;font-weight:600}
+.result pre{white-space:pre-wrap;font-family:var(--body);font-size:15px;margin:10px 0 14px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn{font-size:14.5px;padding:.6em 1.1em}
+.btn-line{background:transparent;color:var(--fg);border:1.5px solid var(--fg)}
+.small{font-size:14px;color:var(--muted);margin-top:10px}
+@media (max-width:860px){.enquire .grid{grid-template-columns:1fr}.row2{grid-template-columns:1fr}form{padding:22px}}
+
+/* faq */
+.faq{max-width:860px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;font-family:var(--display);font-weight:600;font-size:21px;padding:20px 0}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--buoy);font-size:26px;line-height:1;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 22px;color:var(--muted);max-width:62ch}
+
+/* footer */
+footer{background:var(--night);color:#a9c3c0;padding-block:72px 40px}
+.fbig{font-family:var(--display);font-weight:800;font-size:clamp(46px,8vw,120px);color:#fff;line-height:.9;letter-spacing:-.045em;margin-bottom:48px}
+footer .grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:36px}
+footer h4{font-family:var(--display);font-size:15px;color:var(--sand);margin:0 0 10px;font-weight:600}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:15px}
+footer a{text-decoration:none}
+footer a:hover{color:#fff}
+.legal{margin-top:52px;padding-top:20px;border-top:1px solid #1d3d43;font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:860px){footer .grid{grid-template-columns:1fr 1fr}footer .grid>div:first-child{grid-column:1/-1}}
+
+.toast{position:fixed;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--fg);color:var(--bg);font-family:var(--display);font-size:14px;padding:10px 18px;border-radius:999px;z-index:120}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="concept"><div class="wrap"><span>Concept redesign for Collanmore Island Lodge. Not the official website.</span><a href="compare.html">See the before and after</a></div></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Collanmore Island Lodge, back to top">
+      <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><path d="M3 23c5-8 10-11 15-11s10 3 15 11" fill="none" stroke="#d8c49b" stroke-width="2.2" stroke-linecap="round"/><path d="M6 28c4-2 8-2 12 0s8 2 12 0" fill="none" stroke="#e8541d" stroke-width="2.2" stroke-linecap="round"/><path d="M18 4l5 8h-10z" fill="#fff"/></svg>
+      <span><b>Collanmore</b><small>Island Lodge, Clew Bay</small></span>
+    </a>
+    <ul>
+      <li><a href="#crossing">Getting here</a></li>
+      <li><a href="#lodge">The lodge</a></li>
+      <li><a href="#adventures">Adventures</a></li>
+      <li><a href="#groups">Groups</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+    </ul>
+    <a class="btn btn-buoy" href="#enquire">Check dates</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" style="padding-block:0">
+  <img class="bg" src="img/hero-croagh.webp" alt="Aerial view of Collanmore and the drumlin islands of Clew Bay, with Croagh Patrick behind" fetchpriority="high">
+  <div class="wrap">
+    <h1><span>Your own island</span><span>in Clew Bay.</span></h1>
+    <div class="under">
+      <p>A private lodge for up to 22 people on the biggest island in the bay. Twelve minutes from Westport, two minutes by boat, and Croagh Patrick across the water.</p>
+      <div class="ctas">
+        <a class="btn btn-buoy" href="#enquire">Plan your stay</a>
+        <a class="btn btn-ghost" href="#crossing">How to get here</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="crossing" id="crossing" aria-labelledby="cross-h">
+  <div class="wrap track" id="track">
+    <div class="grid">
+      <div class="chart-wrap">
+        <div class="chart" role="img" aria-label="Chart of Clew Bay showing the drive from Westport to Rosmoney Pier and the boat to Collanmore Island">
+          <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+            <rect width="640" height="480" fill="var(--chart-sea)"/>
+            <!-- depth contours -->
+            <g fill="none" stroke="var(--chart-soft)" stroke-opacity=".35" stroke-width="1">
+              <path d="M0 120 C120 100 220 150 330 130 S520 90 640 120"/>
+              <path d="M0 330 C140 300 220 350 320 335 S470 300 560 330"/>
+              <path d="M0 60 C150 40 260 80 380 60 S560 30 640 50"/>
+            </g>
+            <!-- mainland north and east -->
+            <path d="M640 0 L640 480 L500 480 C505 450 520 430 540 410 C566 382 545 352 560 322 C575 292 610 272 600 236 C590 196 618 168 608 128 C598 90 572 50 585 0 Z" fill="var(--chart-land)" stroke="var(--chart-soft)" stroke-width="1.2"/>
+            <!-- southern shore with Croagh Patrick -->
+            <path d="M0 480 L0 400 C70 412 130 396 190 414 C250 432 320 424 380 444 C430 460 470 458 500 480 Z" fill="var(--chart-land)" stroke="var(--chart-soft)" stroke-width="1.2"/>
+            <path d="M118 440 L152 404 L186 440 Z" fill="var(--chart-soft)" fill-opacity=".55"/>
+            <text x="152" y="460" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="12" fill="var(--chart-ink)">Croagh Patrick 764 m</text>
+            <!-- drumlins with contour rings -->
+            <g fill="var(--chart-land)" stroke="var(--chart-soft)" stroke-width="1">
+              <ellipse cx="150" cy="120" rx="28" ry="12" transform="rotate(-22 150 120)"/>
+              <ellipse cx="216" cy="78" rx="18" ry="9" transform="rotate(-25 216 78)"/>
+              <ellipse cx="118" cy="236" rx="23" ry="10" transform="rotate(-15 118 236)"/>
+              <ellipse cx="246" cy="312" rx="20" ry="9" transform="rotate(-20 246 312)"/>
+              <ellipse cx="430" cy="88" rx="22" ry="10" transform="rotate(-30 430 88)"/>
+              <ellipse cx="470" cy="340" rx="17" ry="8" transform="rotate(-25 470 340)"/>
+              <ellipse cx="306" cy="128" rx="14" ry="7" transform="rotate(-20 306 128)"/>
+              <ellipse cx="196" cy="364" rx="15" ry="7"/>
+              <ellipse cx="78" cy="168" rx="12" ry="6"/>
+              <ellipse cx="370" cy="372" rx="12" ry="6" transform="rotate(-18 370 372)"/>
+            </g>
+            <!-- Collanmore -->
+            <path d="M296 238 C316 200 380 188 424 198 C462 207 478 236 458 258 C434 284 372 290 330 277 C300 268 284 258 296 238 Z" fill="var(--kelp)" fill-opacity=".85" stroke="var(--chart-ink)" stroke-width="1.5"/>
+            <text x="338" y="246" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="17" fill="#fff">Collanmore</text>
+            <!-- inishgort -->
+            <circle cx="96" cy="300" r="4" fill="var(--sand)" stroke="var(--chart-ink)"/>
+            <text x="106" y="304" font-family="Bricolage Grotesque, sans-serif" font-size="11.5" fill="var(--chart-ink)">Inishgort lighthouse</text>
+            <!-- soundings -->
+            <g font-family="Literata, serif" font-style="italic" font-size="11" fill="var(--chart-soft)">
+              <text x="60" y="60">8</text><text x="112" y="350">5</text><text x="250" y="190">3</text><text x="366" y="160">4</text><text x="236" y="256">6</text><text x="404" y="330">2</text><text x="40" y="270">11</text><text x="336" y="64">7</text><text x="520" y="70">4</text>
+            </g>
+            <!-- routes -->
+            <path id="road" d="M620 462 C606 420 584 390 566 356 C556 338 548 326 536 316" fill="none" stroke="var(--chart-ink)" stroke-width="3" stroke-linecap="round"/>
+            <path id="sea" d="M536 316 C514 298 492 276 462 254" fill="none" stroke="var(--buoy)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="7 7"/>
+            <path id="all" d="M620 462 C606 420 584 390 566 356 C556 338 548 326 536 316 C514 298 492 276 462 254" fill="none" stroke="none"/>
+            <!-- places -->
+            <circle cx="620" cy="462" r="6" fill="var(--chart-ink)" stroke="var(--chart-sea)" stroke-width="2"/>
+            <circle cx="536" cy="316" r="6" fill="var(--chart-ink)" stroke="var(--chart-sea)" stroke-width="2"/>
+            <circle cx="458" cy="252" r="6" fill="var(--buoy)" stroke="#fff" stroke-width="2"/>
+            <g font-family="Bricolage Grotesque, sans-serif" font-weight="600" font-size="13.5" fill="var(--chart-ink)">
+              <text x="610" y="448" text-anchor="end">Westport</text>
+              <text x="548" y="298">Rosmoney</text><text x="548" y="313">Pier</text>
+            </g>
+            <!-- moving marker -->
+            <g id="boat" transform="translate(458 252)">
+              <circle r="11" fill="var(--buoy)" fill-opacity=".25"/>
+              <circle r="6.5" fill="var(--buoy)" stroke="#fff" stroke-width="2"/>
+            </g>
+            <!-- compass + legend -->
+            <g transform="translate(46 408)"><circle r="22" fill="none" stroke="var(--chart-soft)"/><path d="M0 -20 L4.5 0 L0 20 L-4.5 0 Z" fill="var(--chart-ink)"/><text y="-27" text-anchor="middle" font-family="Bricolage Grotesque" font-size="11" fill="var(--chart-ink)">N</text></g>
+            <text x="22" y="30" font-family="Bricolage Grotesque, sans-serif" font-size="12" fill="var(--chart-soft)">Clew Bay, schematic. Not for navigation.</text>
+          </svg>
+        </div>
+        <div class="clock"><b id="clock">0 min</b><span id="where">Westport</span></div>
+      </div>
+      <div class="legs">
+        <div class="intro">
+          <h2 id="cross-h">Fourteen minutes from Westport.</h2>
+          <p>Leave town, park at the pier, and the boat does the rest. Scroll to make the trip.</p>
+        </div>
+        <div class="leg" data-at="0.08"><span class="t">Westport, 0 min</span><h3>Leave the town behind</h3><p>Head north-west out of Westport towards Rosmoney. Last chance for the shop, the off-licence and a pint in Matt Molloy's.</p></div>
+        <div class="leg" data-at="0.5"><span class="t">Rosmoney Pier, 12 min</span><h3>Meet the boat</h3><p>Park at the pier and walk down the new pontoon. The team picks you up by high-speed RIB at your agreed time. The return crossing is €20 per person.</p></div>
+        <div class="leg" data-at="0.92"><span class="t">Collanmore, 14 min</span><h3>Step off at the jetty</h3><p>The lodge is a short walk up from the shore. Bags, kegs and the birthday cake come over on the boat too.</p></div>
+        <div class="pack"><h3>What to bring</h3><p>Towels, an old pair of runners for the beach, warm layers and whatever you're drinking. Wetsuits and all activity gear are supplied.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="lodge" aria-labelledby="lodge-h">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="lodge-h">The whole lodge is yours.</h2>
+      <p>Set in landscaped gardens a few steps from a sandy beach. No other guests and no shared spaces, just your group, the island and the bay.</p>
+    </div>
+    <div class="mosaic">
+      <figure class="m1"><img src="img/living-room.webp" alt="Open-plan living room with sofas, a stove and a vaulted ceiling" loading="lazy"><figcaption>Living room</figcaption></figure>
+      <figure class="m2"><img src="img/kitchen.webp" alt="Kitchen with a long wooden dining table" loading="lazy"><figcaption>Kitchen and dining</figcaption></figure>
+      <figure class="m3"><img src="img/deck.webp" alt="Picnic benches and parasols on a deck over the bay" loading="lazy"><figcaption>The deck</figcaption></figure>
+      <figure class="m4"><img src="img/bunks.webp" alt="Timber pod-style bunk beds" loading="lazy"><figcaption>Pod bunks</figcaption></figure>
+      <figure class="m5"><img src="img/lounge.webp" alt="Lounge with kitchen island" loading="lazy"><figcaption>Lounge</figcaption></figure>
+      <figure class="m6"><img src="img/outdoor-dining.webp" alt="Outdoor tables in the garden" loading="lazy"><figcaption>Garden and BBQ</figcaption></figure>
+    </div>
+    <p class="sleeps">Sleeps <b>22</b> across <b>4</b> bedrooms, with <b>24</b> beds and <b>3</b> bathrooms.</p>
+    <div class="amen">
+      <div><h3>A kitchen for a crowd</h3><p>Cook for the whole group with two fridges and a freezer. Or book a private chef and skip the washing up.</p></div>
+      <div><h3>Fire pit and hammocks</h3><p>An outdoor area with a fire pit, hammocks, a big gas BBQ and festoon lights for long Mayo evenings.</p></div>
+      <div><h3>Wi-Fi and a smart TV</h3><p>Fast free Wi-Fi and a smart TV with HDMI, for the match, the slideshow or the team planning session.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bar" aria-labelledby="bar-h">
+  <div class="wrap grid">
+    <div class="photos">
+      <img src="img/toms-bar.webp" alt="Tom's Bar, a replica traditional Irish pub inside the lodge" loading="lazy">
+      <img src="img/guinness.webp" alt="A pint of Guinness on the bar" loading="lazy">
+      <img src="img/bar-detail.webp" alt="Bar shelves and a chalkboard heart sign" loading="lazy">
+    </div>
+    <div>
+      <h2 id="bar-h">Tom's Bar</h2>
+      <blockquote>“Dance as if no one were watching, sing as if no one were listening.”</blockquote>
+      <p>A replica traditional Irish pub inside the lodge, with draught taps, high stools and bunting. Bring your own drinks, or arrange a keg with the team before you arrive, and the bar is yours till the last song.</p>
+    </div>
+  </div>
+</section>
+
+<section class="heat" aria-labelledby="heat-h">
+  <div class="wrap">
+    <div class="head"><h2 id="heat-h">Sauna, sea, repeat.</h2><p>The Atlantic is right outside. Sweat it out with the bay in front of you, run down the pontoon and jump in, then sink into the hot tub.</p></div>
+    <div class="grid">
+      <img class="big" src="img/sauna-interior.webp" alt="Inside the timber beach sauna, with a wide window onto the bay" loading="lazy">
+      <div class="items">
+        <div class="item"><img src="img/sauna-window.webp" alt="Guest relaxing in the beach sauna" loading="lazy"><div><h3>The beach sauna</h3><p>Built at the water's edge, with a picture window over Clew Bay and the sea a few steps away.</p></div></div>
+        <div class="item"><img src="img/hot-tub.webp" alt="Hot tub looking out over the water" loading="lazy"><div><h3>A hot tub for nine</h3><p>Covered and outdoors, big enough for most of the group at once.</p></div></div>
+        <div class="item"><img src="img/sauna-group.webp" alt="Friends together in the sauna" loading="lazy"><div><h3>Steam and seaweed</h3><p>A steam shower and seaweed baths, and a sea dip cold enough to reset your life choices.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="adv" id="adventures" aria-labelledby="adv-h">
+  <div class="wrap">
+    <div class="head"><h2 id="adv-h">Get out on the water.</h2><p>Run by The Adventure Islands from their base beside the lodge. Open to lodge guests and day visitors, with wetsuits and all gear supplied.</p></div>
+    <div class="rows">
+      <div class="row"><img src="img/kayak-group.webp" alt="Group in wetsuits beside sit-on-top kayaks" loading="lazy"><div><h3>Sea kayaking</h3><p>Paddle the sheltered channels between the drumlins in sit-on-top kayaks that suit any level.</p></div><div class="facts">2.5 hours, pier to pier.<br>Age 6 and up.<br>10:30 and 13:00 in season.</div><div class="price">€60<small>€50 under 16</small></div></div>
+      <div class="row"><img src="img/sup-group.webp" alt="Two paddleboarders celebrating on the water" loading="lazy"><div><h3>Stand-up paddleboarding</h3><p>First time on a board? The calm water here is the place to learn. Kayaking is included.</p></div><div class="facts">2.5 hours, pier to pier.<br>All levels.<br>Boat transfer included.</div><div class="price">€60<small>per person</small></div></div>
+      <div class="row"><img src="img/lighthouse.webp" alt="Inishgort lighthouse at the mouth of the bay" loading="lazy"><div><h3>Sea safari</h3><p>A fast RIB tour of the islands to the seal colony and the 1800s lighthouse on Inishgort. Bring a camera.</p></div><div class="facts">1 hour.<br>Minimum 5 people.</div><div class="price">€60<small>per person</small></div></div>
+      <div class="row"><img src="img/sumo.webp" alt="Two people in inflatable sumo suits on the lawn" loading="lazy"><div><h3>Island games</h3><p>Sumo suits, raft building, the sea trampoline and team challenges. Built for hen parties and away days.</p></div><div class="facts">Tailored to your group.<br>On land and sea.</div><div class="price">Ask<small>for a group price</small></div></div>
+    </div>
+    <p class="note">Prices from The Adventure Islands' published rates. Text 086 251 8252 to book. Smaller groups can join another group's session.</p>
+  </div>
+</section>
+
+<section id="groups" aria-labelledby="groups-h">
+  <div class="wrap">
+    <div class="head"><h2 id="groups-h">Made for the whole gang.</h2></div>
+    <div class="tabs" role="tablist" aria-label="Kinds of group">
+      <button role="tab" id="t-hen" aria-selected="true" aria-controls="p-groups" data-k="hen">Hens and stags</button>
+      <button role="tab" id="t-corp" aria-selected="false" aria-controls="p-groups" data-k="corp">Work teams</button>
+      <button role="tab" id="t-fam" aria-selected="false" aria-controls="p-groups" data-k="fam">Families</button>
+      <button role="tab" id="t-well" aria-selected="false" aria-controls="p-groups" data-k="well">Wellness</button>
+    </div>
+    <div class="panel" id="p-groups" role="tabpanel" aria-live="polite">
+      <img id="g-img" src="img/bar-crowd.webp" alt="Friends celebrating in Tom's Bar" loading="lazy">
+      <div>
+        <h3 id="g-title">The weekend they'll still talk about.</h3>
+        <p id="g-text">Your own island, your own pub and nobody next door to complain. Paddleboard in the morning, sauna in the afternoon, Tom's Bar all night.</p>
+        <ul id="g-list"><li>Sumo suits and the sea trampoline</li><li>Takeaway delivered by boat on the last night</li><li>Campfire, festoon lights and your own playlist</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" aria-labelledby="rev-h">
+  <div class="wrap">
+    <h2 id="rev-h" class="feature">“The hot tub was huge, and the sauna after kayaking was very welcome!”</h2>
+    <p class="feature-by">Guest review on TripAdvisor</p>
+    <div class="more">
+      <div><blockquote>“Greeted with a warm fire in a luxurious living room and kitchen with views out to Clew Bay.”</blockquote><p>Guest review on TripAdvisor</p></div>
+      <div><blockquote>“Fantastic place and crew. If you're in Westport it's a must.”</blockquote><p>Guest review on TripAdvisor</p></div>
+    </div>
+    <p class="rating">Rated <b>4.9</b> out of 5 from 276 reviews on TripAdvisor, and <b>4.94</b> by guests on Airbnb.</p>
+  </div>
+</section>
+
+<section id="gallery" aria-labelledby="gal-h">
+  <div class="wrap">
+    <div class="head"><h2 id="gal-h">Life on Collanmore.</h2><p>Tap any photo to see it full size.</p></div>
+    <div class="gallery" id="gallery-grid"></div>
+  </div>
+</section>
+
+<section class="enquire" id="enquire" aria-labelledby="enq-h">
+  <div class="wrap grid">
+    <div class="intro">
+      <h2 id="enq-h">Tell us who's coming.</h2>
+      <p>Pick your dates and your group, and we'll write a message you can send straight to the team. A €500 deposit holds your dates.</p>
+      <dl class="contact">
+        <div><dt>Call or text</dt><dd>+353 86 251 8252</dd></div>
+        <div><dt>Email</dt><dd>info@theadventureislands.com</dd></div>
+        <div><dt>Office hours</dt><dd style="user-select:auto">Every day, 9am to 6pm</dd></div>
+      </dl>
+    </div>
+    <form id="enq-form" novalidate>
+      <div class="row2">
+        <label class="f" for="f-arrive">Arriving<input type="date" id="f-arrive" value="2027-05-14"></label>
+        <label class="f" for="f-nights">Nights<select id="f-nights"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>7</option></select></label>
+      </div>
+      <label class="f" for="f-size">How many people
+        <span class="size"><input type="range" id="f-size" min="2" max="22" value="14"><output id="size-out" for="f-size">14</output></span>
+      </label>
+      <label class="f" for="f-type">What's the occasion<select id="f-type"><option>Hen party</option><option>Stag party</option><option>Birthday</option><option>Family get-together</option><option>Work team away day</option><option>Wellness weekend</option><option>Something else</option></select></label>
+      <fieldset>
+        <legend>Add activities</legend>
+        <div class="chips">
+          <label><input type="checkbox" id="a-kayak" value="Sea kayaking" checked><span>Sea kayaking</span></label>
+          <label><input type="checkbox" id="a-sup" value="Paddleboarding"><span>Paddleboarding</span></label>
+          <label><input type="checkbox" id="a-safari" value="Sea safari" checked><span>Sea safari</span></label>
+          <label><input type="checkbox" id="a-sauna" value="Sauna and hot tub session"><span>Sauna session</span></label>
+          <label><input type="checkbox" id="a-games" value="Island games"><span>Island games</span></label>
+          <label><input type="checkbox" id="a-chef" value="Private chef"><span>Private chef</span></label>
+        </div>
+      </fieldset>
+      <div class="row2">
+        <label class="f" for="f-name">Your name<input id="f-name" autocomplete="name" placeholder="Aoife Byrne"></label>
+        <label class="f" for="f-notes">Anything else<input id="f-notes" placeholder="Keg, cake, a late boat"></label>
+      </div>
+      <button class="btn btn-buoy" type="submit" style="justify-self:start">Write my enquiry</button>
+      <div class="result" id="result" hidden>
+        <h3>Your message is ready to send</h3>
+        <pre id="msg"></pre>
+        <div class="acts">
+          <button type="button" class="btn btn-buoy" id="copy">Copy message</button>
+          <a class="btn btn-line" id="sms" href="#">Open in Messages</a>
+        </div>
+        <p class="small">This is a concept. On the live site, the message would go straight to the booking team.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section aria-labelledby="faq-h">
+  <div class="wrap">
+    <div class="head"><h2 id="faq-h">Questions people ask.</h2></div>
+    <div class="faq">
+      <details open><summary>Do we have the island to ourselves?</summary><p>The lodge and everything in it is yours for your stay. Collanmore is privately owned, with a handful of residents, so expect peace, wildlife and the odd friendly neighbour.</p></details>
+      <details><summary>Can we bring our own drinks?</summary><p>Yes, Tom's Bar is bring your own. You can bring a keg too; arrange it with the team before you arrive so it's ready on the taps.</p></details>
+      <details><summary>How old do you need to be for the activities?</summary><p>Kayaking is for age 6 and up, and under-16s pay the reduced rate. There are summer adventure camps for kids during the school holidays.</p></details>
+      <details><summary>What if the weather turns?</summary><p>The islands shelter the bay, so the team can usually find calm water. If it isn't safe to go out, they'll move you to another time or another activity.</p></details>
+      <details><summary>Is the lodge open all year?</summary><p>Yes. Winter stays come with the stove lit, the sauna on and far fewer midges.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fbig">See you on<br>the island.</div>
+    <div class="grid">
+      <div><h4>Collanmore Island Lodge</h4><p>The Adventure Islands<br>Collanmore Island, Clew Bay<br>Westport, Co. Mayo</p></div>
+      <div><h4>Stay</h4><ul><li><a href="#lodge">The lodge</a></li><li><a href="#groups">Groups</a></li><li><a href="#enquire">Check dates</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#adventures">Adventures</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#crossing">Getting here</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>+353 86 251 8252</li><li>info@theadventureislands.com</li><li><a href="https://www.instagram.com/collanmoreislandlodge/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="legal"><span>Concept redesign prepared as a proposal. Photography by The Adventure Islands and Collanmore Island Lodge.</span><span>Not the official website.</span></div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div class="lb-bar"><button type="button" id="lb-prev">Previous</button><button type="button" id="lb-next">Next</button><button type="button" id="lb-close">Close</button></div>
+  <img id="lb-img" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<script>
+(function(){
+  /* crossing: scroll moves the boat from Westport to the jetty */
+  var all=document.getElementById('all'),boat=document.getElementById('boat'),clock=document.getElementById('clock'),where=document.getElementById('where'),track=document.getElementById('track');
+  var legs=[].slice.call(document.querySelectorAll('.leg'));
+  var L=all.getTotalLength(),road=document.getElementById('road').getTotalLength();
+  var wide=window.matchMedia('(min-width: 901px)'),still=window.matchMedia('(prefers-reduced-motion: reduce)');
+  function place(p){
+    var d=p*L,pt=all.getPointAtLength(d);boat.setAttribute('transform','translate('+pt.x.toFixed(1)+' '+pt.y.toFixed(1)+')');
+    var mins=d<=road? (d/road)*12 : 12+((d-road)/(L-road))*2;
+    clock.textContent=Math.round(mins)+' min';
+    where.textContent=p<.04?'Westport':(d<road?'On the road to Rosmoney':(p<.97?'On the boat':'Collanmore jetty'));
+    legs.forEach(function(el){el.classList.toggle('on',p>=parseFloat(el.dataset.at)-.12)});
+  }
+  function onScroll(){
+    if(!wide.matches||still.matches){place(1);return}
+    var r=track.getBoundingClientRect(),vh=window.innerHeight;
+    var p=(vh*.55-r.top)/(r.height-vh*.6);place(Math.max(0,Math.min(1,p)));
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);onScroll();
+
+  /* gallery */
+  var photos=[["drumlins","Collanmore from the air"],["sup-paddle","Paddleboarding off the beach"],["fire-bar","Firelight in the outdoor bar"],["rib-circle","The RIB showing off"],["sunset-bay","Sunset over Clew Bay"],["feast","A long-table feast on the lawn"],["beach-aerial","The island's sandy bays"],["kayak","Kayaking in the sun"],["hammock","Hammock time"],["lighthouse-aerial","Inishgort lighthouse"],["sunset-friends","Golden hour"],["crew","The crew after a paddle"],["rib-wake","Crossing the bay"],["island-aerial","Green drumlins of the inner bay"],["beach-sand","Footprints on the beach"],["rib","One of the RIBs at the pontoon"],["lodge-grounds","The lodge grounds"],["sunset-sun","Sun dropping behind the islands"],["shore","Walking the shoreline"],["dining-hall","The dining room"],["lighthouse-pier","The lighthouse pier"],["sauna-view","View from the sauna"],["aerial-croagh","Croagh Patrick over the bay"]];
+  var g=document.getElementById('gallery-grid');
+  photos.forEach(function(p,i){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Open photo: '+p[1]);var im=document.createElement('img');im.src='img/'+p[0]+'.webp';im.alt=p[1];im.loading='lazy';b.appendChild(im);b.addEventListener('click',function(){openLb(i)});g.appendChild(b)});
+  var lb=document.getElementById('lb'),li=document.getElementById('lb-img'),lc=document.getElementById('lb-cap'),cur=0,last=null;
+  function show(i){cur=(i+photos.length)%photos.length;li.src='img/'+photos[cur][0]+'.webp';li.alt=photos[cur][1];lc.textContent=photos[cur][1]+', '+(cur+1)+' of '+photos.length}
+  function openLb(i){last=document.activeElement;show(i);lb.hidden=false;document.getElementById('lb-close').focus()}
+  function closeLb(){lb.hidden=true;if(last)last.focus()}
+  document.getElementById('lb-close').onclick=closeLb;document.getElementById('lb-next').onclick=function(){show(cur+1)};document.getElementById('lb-prev').onclick=function(){show(cur-1)};
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLb()});
+  document.addEventListener('keydown',function(e){if(lb.hidden)return;if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1)});
+
+  /* groups */
+  var G={
+    hen:{img:"bar-crowd",alt:"Friends celebrating in Tom's Bar",t:"The weekend they'll still talk about.",x:"Your own island, your own pub and nobody next door to complain. Paddleboard in the morning, sauna in the afternoon, Tom's Bar all night.",l:["Sumo suits and the sea trampoline","Takeaway delivered by boat on the last night","Campfire, festoon lights and your own playlist"]},
+    corp:{img:"crew",alt:"Group in wetsuits on the shore",t:"An away day that's actually away.",x:"Take the team somewhere the phone signal is optional. Challenges on land and water, then dinner around one big table.",l:["Team-building and island challenges","Day programmes for 6 to 60 people","Wi-Fi and a smart TV for the planning session"]},
+    fam:{img:"sup-group",alt:"Paddleboarders on Clew Bay",t:"Three generations, one island.",x:"Room for the whole extended family under one roof, with a beach for the kids and a stove for the grandparents.",l:["Kayaking from age 6","Rock pools, beach walks and island hide-and-seek","Summer adventure camps in the school holidays"]},
+    well:{img:"sauna-window",alt:"Guest in the beach sauna",t:"Slow down at the edge of the Atlantic.",x:"Sauna and sea-swim rounds, seaweed baths, island walks and nothing on the schedule after six.",l:["Beach sauna, steam and hot tub","Seaweed baths with sea views","Guided walks to the top of the island"]}
+  };
+  var tabs=[].slice.call(document.querySelectorAll('.tabs button'));
+  function setTab(k){var d=G[k],im=document.getElementById('g-img');im.src='img/'+d.img+'.webp';im.alt=d.alt;document.getElementById('g-title').textContent=d.t;document.getElementById('g-text').textContent=d.x;var ul=document.getElementById('g-list');ul.innerHTML='';d.l.forEach(function(s){var x=document.createElement('li');x.textContent=s;ul.appendChild(x)});tabs.forEach(function(b){b.setAttribute('aria-selected',b.dataset.k===k?'true':'false')})}
+  tabs.forEach(function(b){b.addEventListener('click',function(){setTab(b.dataset.k)})});
+
+  /* enquiry */
+  var size=document.getElementById('f-size'),out=document.getElementById('size-out');
+  size.addEventListener('input',function(){out.textContent=size.value});
+  function fmt(d){try{return new Date(d+'T12:00:00').toLocaleDateString('en-IE',{weekday:'short',day:'numeric',month:'long',year:'numeric'})}catch(e){return d}}
+  document.getElementById('enq-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var arrive=document.getElementById('f-arrive').value,n=+document.getElementById('f-nights').value,dep='';
+    if(arrive){var d=new Date(arrive+'T12:00:00');d.setDate(d.getDate()+n);dep=d.toISOString().slice(0,10)}
+    var acts=[].slice.call(document.querySelectorAll('.chips input:checked')).map(function(c){return c.value});
+    var name=document.getElementById('f-name').value.trim(),notes=document.getElementById('f-notes').value.trim();
+    var m="Hi, I'd like to book Collanmore Island Lodge.\n\nDates: "+(arrive?fmt(arrive)+" to "+fmt(dep):"flexible")+" ("+n+" night"+(n>1?"s":"")+")\nGroup: "+size.value+" people, "+document.getElementById('f-type').value.toLowerCase()+"\nActivities: "+(acts.length?acts.join(", "):"none yet")+"\n"+(notes?"Notes: "+notes+"\n":"")+"\nCould you let me know if you're free and what it would cost?"+(name?"\n\nThanks,\n"+name:"\n\nThanks!");
+    document.getElementById('msg').textContent=m;document.getElementById('sms').href='sms:+353862518252?&body='+encodeURIComponent(m);
+    var r=document.getElementById('result');r.hidden=false;r.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+  document.getElementById('copy').addEventListener('click',function(){
+    var t=document.getElementById('msg').textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('msg'));var s=getSelection();s.removeAllRanges();s.addRange(r);toast('Message selected, copy it from here')}
+    try{navigator.clipboard.writeText(t).then(function(){toast('Message copied')},sel)}catch(e){sel()}
+  });
+  function toast(t){var el=document.createElement('div');el.className='toast';el.setAttribute('role','status');el.textContent=t;document.body.appendChild(el);setTimeout(function(){el.remove()},1900)}
+})();
+</script>
+</body>
+</html>
